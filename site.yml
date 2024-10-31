@@ -1,15 +1,15 @@
 ---
 # linode gluster ansible playbook
 
-# cluster pre-check
-- name: pre-check
-  hosts: gluster_servers
-  user: root
-  vars_files:
-    - group_vars/gluster/vars
-    - group_vars/gluster/secret_vars
-  roles:
-    - precheck
+## cluster pre-check
+#- name: pre-check
+#  hosts: gluster_servers
+#  user: root
+#  vars_files:
+#    - group_vars/gluster/vars
+#    - group_vars/gluster/secret_vars
+#  roles:
+#    - precheck
 
 # gluster servers
 - name: configure gluster servers
