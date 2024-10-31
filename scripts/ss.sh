@@ -78,15 +78,15 @@ function rename_provisioner {
       https://api.linode.com/v4/linode/instances/${LINODE_ID}
 }
 
-function tag_provisioner {
-  echo "[info] tagging the provisioner"
-  REGION=$(curl -sH "Authorization: Bearer ${TOKEN_PASSWORD}" "https://api.linode.com/v4/linode/instances/${LINODE_ID}" | jq -r .region)
-  export REGION="${REGION}"
-  curl -s -H "Content-Type: application/json" \
-    -H "Authorization: Bearer ${TOKEN_PASSWORD}" -X PUT \
-    -d "{\"tags\": [\"${UUID}-${REGION}\"]}" \ \
-    https://api.linode.com/v4/linode/instances/${LINODE_ID}   
-}
+#function tag_provisioner {
+#  echo "[info] tagging the provisioner"
+#  REGION=$(curl -sH "Authorization: Bearer ${TOKEN_PASSWORD}" "https://api.linode.com/v4/linode/instances/${LINODE_ID}" | jq -r .region)
+#  export REGION="${REGION}"
+#  curl -s -H "Content-Type: application/json" \
+#    -H "Authorization: Bearer ${TOKEN_PASSWORD}" -X PUT \
+#    -d "{\"tags\": [\"${UUID}-${REGION}\"]}" \ \
+#    https://api.linode.com/v4/linode/instances/${LINODE_ID}   
+#}
 
 function setup {
   # install dependencies
@@ -95,7 +95,7 @@ function setup {
   apt-get install -y jq git python3 python3-pip python3-dev build-essential firewalld
   # add private IP address
   rename_provisioner
-  tag_provisioner
+  #tag_provisioner
   configure_privateip  
   # write authorized_keys file
   if [ "${ADD_SSH_KEYS}" == "yes" ]; then

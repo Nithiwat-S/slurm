@@ -6,7 +6,7 @@
     state: restarted
     enabled: yes
 
-- name: restart firewalld
-  systemd:
-    name: firewalld
-    state: restarted
+#- name: restart firewalld
+#  systemd:
+#    name: firewalld
+#    state: restarted

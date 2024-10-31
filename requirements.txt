@@ -8,4 +8,3 @@ flake8==3.9.2
 ansible-lint==6.1.0
 ansible-specdoc==0.0.14
 pyyaml==6.0.1
-dnspython==2.4.2

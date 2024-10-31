@@ -12,7 +12,6 @@ function cleanup {
 }
 
 # constants
-readonly NOMAD_VERSION='1.5.2'
 readonly ROOT_PASS=$(sudo cat /etc/shadow | grep root)
 readonly LINODE_PARAMS=($(curl -sH "Authorization: Bearer ${TOKEN_PASSWORD}" "https://api.linode.com/v4/linode/instances/${LINODE_ID}" | jq -r .type,.region,.image))
 readonly TAGS=$(curl -sH "Authorization: Bearer ${TOKEN_PASSWORD}" "https://api.linode.com/v4/linode/instances/${LINODE_ID}" | jq -r .tags)
@@ -79,8 +78,6 @@ function ansible:build {
   # sudo user
   sudo_username: ${SUDO_USERNAME}
   email_address: ${EMAIL_ADDRESS}
-  nomad_version: ${NOMAD_VERSION}
-  cluster_size: ${CLUSTER_SIZE}
   servers: ${SERVERS}
   clients: ${CLIENTS}
   # paths
@@ -88,7 +85,7 @@ EOF
 }
 
 function ansible:deploy {
-  local SECRET_VARS_PATH="./group_vars/nomad/secret_vars"
+  #local SECRET_VARS_PATH="./group_vars/nomad/secret_vars"
 
   ansible-playbook -v provision.yml
   ansible-playbook -i hosts site.yml -v --extra-vars "root_password=${ROOT_PASS} add_keys_prompt=${ADD_SSH_KEYS}"
@@ -104,18 +101,18 @@ function ansible:deploy {
   ansible-playbook -i hosts site.yml -v --extra-vars "root_password=${ROOT_PASS} add_keys_prompt=${ADD_SSH_KEYS} cluster_mode='${CLUSTER_MODE}' is_provisioner='false' --tags cluster"
 }
 
-function test:deploy {
-  export DISTRO="${1}"
-  export DATE="$(date '+%Y-%m-%d-%H%M%S')"
-  ansible-playbook provision.yml --extra-vars "ssh_keys=${HOME}/.ssh/id_ansible_ed25519.pub instance_prefix=${DISTRO}-${DATE} image=linode/${DISTRO}"
-  ansible-playbook -i hosts site.yml --extra-vars "root_password=${ROOT_PASS}  add_keys_prompt=yes"
-  verify
-}
+#function test:deploy {
+#  export DISTRO="${1}"
+#  export DATE="$(date '+%Y-%m-%d-%H%M%S')"
+#  ansible-playbook provision.yml --extra-vars "ssh_keys=${HOME}/.ssh/id_ansible_ed25519.pub instance_prefix=${DISTRO}-${DATE} image=linode/${DISTRO}"
+#  ansible-playbook -i hosts site.yml --extra-vars "root_password=${ROOT_PASS}  add_keys_prompt=yes"
+#  verify
+#}
 
 # main
 case $1 in
     ansible:build) "$@"; exit;;
     ansible:deploy) "$@"; exit;;
-    test:build) "$@"; exit;;
+#    test:build) "$@"; exit;;
     test:deploy) "$@"; exit;;
 esac

@@ -1,3 +1,5 @@
+---
+# create instances
 - name: configuring environment
   hosts: localhost
   connection: local
@@ -6,14 +8,14 @@
       - group_vars/nomad/secret_vars
   
   vars:
-    count: '{{ servers - 1 }}' # UDF
-    clients: '{{ clients }}'
+    count: '{{ client }}' # UDF
+    cluster_size: '{{ client + 1}}'
        
   tasks:
 
   - name: creating cluster
     linode.cloud.instance:
-      label: '{{ instance_prefix }}-server-{{ item | int + 1 }}-{{ uuid }}'
+      label: '{{ instance_prefix }}{{ item | int + 1 }}-{{ uuid }}'
       api_token: '{{ api_token }}'
       type: '{{ type }}'
       region: '{{ region }}'
@@ -22,40 +24,17 @@
       authorized_keys: '{{ ssh_keys }}'
       private_ip: true
       stackscript_id: '1226546'
-      ua_prefix: 'marketplace-nomad-occ'      
+      ua_prefix: 'marketplace-occ'      
       tags: '{{ cluster_uuid }}'
       state: present
     with_sequence: count='{{ count }}'
 
-  - name: creating clients
-    linode.cloud.instance:
-      label: '{{ instance_prefix }}-client-{{ item | int }}-{{ uuid }}'
-      api_token: '{{ api_token }}'
-      type: '{{ type }}'
-      region: '{{ region }}'
-      image: '{{ image }}'
-      root_pass: '{{ root_pass }}'
-      authorized_keys: '{{ ssh_keys }}'
-      private_ip: true
-      stackscript_id: '1226547'
-      ua_prefix: 'marketplace-nomad-occ'      
-      tags: '{{ cluster_uuid }}'
-      state: present
-    with_sequence: count='{{ clients }}'
-
-  - name: get info about the client instances
-    linode.cloud.instance_info:
-      api_token: '{{ api_token }}'
-      label: '{{ instance_prefix }}-client-{{ item | int }}-{{ uuid }}'
-    register: client_info
-    with_sequence: count='{{ clients }}'
-
   - name: get info about the server instances
     linode.cloud.instance_info:
       api_token: '{{ api_token }}'
-      label: '{{ instance_prefix }}-server-{{ item | int }}-{{ uuid }}'
+      label: '{{ instance_prefix }}{{ item | int }}-{{ uuid }}'
     register: server_info
-    with_sequence: count='{{ servers }}'
+    with_sequence: count='{{ cluster_size }}'
 
   - name: update group_vars with server variables
     blockinfile:
@@ -65,28 +44,18 @@
         #jinja2: trim_blocks:False
         nomad_data:
           server:
-            {%- for count in range(servers) %}
+            {%- for count in range(cluster_size) %}
             - nomad-server-{{ count + 1 }}:
               instance:
-                hostname: {{ server_info.results[count].instance.label | replace('_', '-') }}
+                hostname: compute-{{ count +1 }}
                 ip_pub1: {{ server_info.results[count].instance.ipv4[0] }}
                 ip_priv1: {{ server_info.results[count].instance.ipv4[1] }}
             {%- endfor %}        
-          client:
-            {%- for count in range(clients) %}
-            - nomad-client-{{ count + 1 }}:
-              instance:
-                hostname: {{ client_info.results[count].instance.label | replace('_', '-') }}
-                ip_pub1: {{ client_info.results[count].instance.ipv4[0] }}
-                ip_priv1: {{ client_info.results[count].instance.ipv4[1] }}
-            {%- endfor %}
 
   - name: test connectivity
     ping: 
     with_items: "{{ item.instance.ipv4[0] }}"
-    loop: 
-    - "{{ client_info.results }}"
-    - "{{ server_info.results }}"
+    loop: "{{ server_info.results }}"
 
   - name: update inventory
     blockinfile:
@@ -96,12 +65,8 @@
         #jinja2: trim_blocks:False
         [nomad_cluster]
         localhost ansible_connection=local user=root
-        {%- for count in range(servers - 1) %}
+        {%- for count in range(cluster_size) %}
         {{ server_info.results[count + 1].instance.ipv4[0] }}
-        {%- endfor %}
-        [nomad_client]
-        {%- for count in range(clients) %}
-        {{ client_info.results[count].instance.ipv4[0] }}
         {%- endfor %}
 
   - name: wait for port 22 to become open
@@ -111,6 +76,4 @@
       search_regex: OpenSSH
       delay: 10
     connection: local
-    with_items: 
-    - "{{ client_info.results }}"
-    - "{{ server_info.results }}"
+    with_items: "{{ server_info.results }}"

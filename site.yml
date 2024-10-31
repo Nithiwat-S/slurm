@@ -13,6 +13,5 @@
   
   roles:
     - common
-    - consul
-    - nomad
+#    - nomad
     - post
