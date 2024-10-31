@@ -8,7 +8,7 @@ trap "cleanup $? $LINENO" EXIT
 # <UDF name="email_address" label="Email Address" example="Example: user@domain.tld" />
 # <UDF name="clusterheader" label="Cluster Settings" default="Yes" header="Yes">
 # <UDF name="add_ssh_keys" label="Add Account SSH Keys to All Nodes?" oneof="yes,no"  default="yes" />
-# <UDF name="cluster_size" label="Total instance count" default="6" oneof="6" />
+# <UDF name="cluster_size" label="Total instance count" default="3" oneof="3" />
 # <UDF name="servers" label="Server count" default="1" oneOf="1" />
 # <UDF name="clients" label="client size" default="2" oneof="2,3,4,5,6,7,8,9,10" />
 # <UDF name="soa_email_address" label="Email address for Let's Encrypt Certificates" />
