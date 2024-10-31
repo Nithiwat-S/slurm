@@ -14,7 +14,7 @@ trap "cleanup $? $LINENO" EXIT
 # <UDF name="soa_email_address" label="Email address for Let's Encrypt Certificates" />
 
 # git repo
-git_username="akamai-compute-marketplace"
+#git_username="akamai-compute-marketplace"
 #export GIT_REPO_1="https://github.com/$git_username/nomad-occ.git"
 #export GIT_REPO_2="https://github.com/$git_username/nomad-client-occ.git"
 export GIT_REPO_1="https://github.com/Nithiwat-S/slurm.git"
