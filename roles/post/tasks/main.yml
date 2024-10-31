@@ -5,5 +5,5 @@
 - name: add user ssh keys
   import_tasks: sshkeys.yml
 
-- name: writing gluster creds into file
-  import_tasks: motd.yml
+#- name: writing gluster creds into file
+#  import_tasks: motd.yml

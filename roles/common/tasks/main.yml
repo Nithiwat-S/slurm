@@ -29,12 +29,12 @@
     - ufw
     state: latest
 
-- name: fail2ban jail.local
-  copy:
-    src: /etc/fail2ban/jail.conf
-    dest: /etc/fail2ban/jail.local
-    remote_src: yes
-  notify: start fail2ban
+#- name: fail2ban jail.local
+#  copy:
+#    src: /etc/fail2ban/jail.conf
+#    dest: /etc/fail2ban/jail.local
+#    remote_src: yes
+#  notify: start fail2ban
 
 - name: secure ssh configs
   lineinfile:
@@ -47,5 +47,5 @@
     - { regexp: '^\#?PubkeyAuthentication (yes|no)', line: 'PubkeyAuthentication yes' }
   notify: restart ssh
 
-- name: apply ufw rules
-  import_tasks: ufw_rules.yml
+#- name: apply ufw rules
+#  import_tasks: ufw_rules.yml
