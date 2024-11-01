@@ -7,7 +7,7 @@ fi
 
 ## Deployment Variables
 # <UDF name="token_password" label="Your Linode API token" />
-# <UDF name="user_name" label="The limited sudo user to be created in the cluster" />
+# <UDF name="user_name" label="The limited sudo user to be created in the cluster" default="wrfroms"/>
 # <UDF name="sslheader" label="SSL Information" header="Yes" default="Yes" required="Yes">
 # <UDF name="clusterheader" label="Cluster Settings" default="Yes" header="Yes">
 # <UDF name="add_ssh_keys" label="Add Account SSH Keys to All Nodes?" oneof="yes,no"  default="yes" />
