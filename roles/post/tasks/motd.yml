@@ -5,7 +5,7 @@
     src: templates/motd.j2
     dest: /etc/motd
 
-- name: writing gluster creds into file
+- name: writing slurm creds into file
   copy:
     dest: "/home/{{ username }}/.credentials"
     mode: '0600'

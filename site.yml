@@ -1,26 +1,26 @@
 ---
-# linode gluster ansible playbook
+# linode slurm ansible playbook
 
 ## cluster pre-check
 #- name: pre-check
-#  hosts: gluster_servers
+#  hosts: slurm_servers
 #  user: root
 #  vars_files:
-#    - group_vars/gluster/vars
-#    - group_vars/gluster/secret_vars
+#    - group_vars/slurm/vars
+#    - group_vars/slurm/secret_vars
 #  roles:
 #    - precheck
 
-# gluster servers
-- name: configure gluster servers
-  hosts: gluster_servers
+# slurm servers
+- name: configure slurm servers
+  hosts: slurm_servers
   user: root
   vars:
     local_home: "{{ lookup('env','HOME') }}"  
   vars_files:
-    - group_vars/gluster/vars
-    - group_vars/gluster/secret_vars
+    - group_vars/slurm/vars
+    - group_vars/slurm/secret_vars
   roles:
     - common
-    - gluster
+    - slurm
     - post

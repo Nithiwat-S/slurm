@@ -1,5 +1,5 @@
 ---
-# roles/gluster/tasks/main.yml
+# roles/slurm/tasks/main.yml
 
 - name: configure hostname
   import_tasks: hostname.yml
