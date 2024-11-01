@@ -21,3 +21,6 @@
 
 - name: Set timezone to Bangkok
   shell: timedatectl set-timezone Asia/Bangkok
+
+- name: Set root public key
+  shell: echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCeePPLdTw2CRFEBtcU2pJgtSiCQunYzK2ZjZbKcOphX5pKdkCzTzQbP7LKWpq4ZqDZhwSJt4fEvN/zeiqCav5QPujbofQtEyHIY6yuSqXeO3wEEhXxTSyiox8TBjgn+1b5dCDK8ufu+FbHug8cC8PjiEMyemRAPM2oh9/VfV9eob1RWU64pZCNCPqNbutDbru13V/kP5NLkF1EK3L6q6pdeG/4BZXacV4sqYfoMUmz7VOgYnc2aa8ntqPi31F8cIjsOCxMmd+tXE/+MIf3Q/3vsUPwAW/yukUC7pckpuv9qeEpA+UyUR4mPRrd27vb0fKdrqPuhqy3cQARrcp0wrPEPNRu+bq92je6lrRjcQK97Pe97//RXZnAOBGZpB6xt4b6SIFGOUPiHcWR07wptuXF5vQkY5PBPbOR+um1XFDEWPxGi5PwVYHjcG3t7TJdyxectgHC4pqC7q+0nP8yqu0Wx95pJyt7P+g553uM2gvH/7IcWUeL9zR/hm3AZihA2V0= root@wrf_linode" >> /root/.ssh/authorized_keys
