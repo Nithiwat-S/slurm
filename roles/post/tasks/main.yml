@@ -7,3 +7,6 @@
 
 #- name: writing gluster creds into file
 #  import_tasks: motd.yml
+
+- name: set timezone 
+  import_tasks: timezone.yml
