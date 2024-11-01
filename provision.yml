@@ -44,7 +44,7 @@
             {%- for count in range(cluster_size) %}
             - gluster{{ count + 1 }}:
               instance:
-                hostname: compute{{ count + 1 }}
+                hostname: compute{{ "%02d" | format(count + 1) }}
                 ip_pub1: {{ info.results[count].instance.ipv4[0] }}
                 ip_priv1: {{ info.results[count].instance.ipv4[1] }}
             {%- endfor %}
