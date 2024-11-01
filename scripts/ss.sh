@@ -11,8 +11,7 @@ fi
 # <UDF name="sslheader" label="SSL Information" header="Yes" default="Yes" required="Yes">
 # <UDF name="clusterheader" label="Cluster Settings" default="Yes" header="Yes">
 # <UDF name="add_ssh_keys" label="Add Account SSH Keys to All Nodes?" oneof="yes,no"  default="yes" />
-# <UDF name="cluster_size" label="Gluster cluster size" default="2" oneof="2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18" />
-# <UDF name="client_ips" label="List of IP addresses to whitelist" example="192.168.1.2, 192.168.1.3" default="" />
+# <UDF name="cluster_size" label="slurm cluster size" default="2" oneof="2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18" />
 
 # git repo
 #git_username="akamai-compute-marketplace"

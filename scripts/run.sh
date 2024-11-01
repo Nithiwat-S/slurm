@@ -84,17 +84,17 @@ function ansible:build {
   uuid: ${UUID}  
   cluster_size: ${CLUSTER_SIZE}
 EOF
-  # write client IPs
-  IPS=$(echo ${CLIENT_IPS} | tr ' ' '\n' | grep -Eo '^([0-9]{1,3}\.){3}[0-9]{1,3}' | sed 's/^/  - /g')
-  if [ -z ${IPS} ]; then
-    echo "[INFO] No valid client IP addressed found"
-    #exit 1
-  else
-    cat << EOF >> ${VARS_PATH}
-client_ips:
-${IPS}
-EOF
-  fi
+#  # write client IPs
+#  IPS=$(echo ${CLIENT_IPS} | tr ' ' '\n' | grep -Eo '^([0-9]{1,3}\.){3}[0-9]{1,3}' | sed 's/^/  - /g')
+#  if [ -z ${IPS} ]; then
+#    echo "[INFO] No valid client IP addressed found"
+#    #exit 1
+#  else
+#    cat << EOF >> ${VARS_PATH}
+#client_ips:
+#${IPS}
+#EOF
+#  fi
 
 # output:
 # client_ips:

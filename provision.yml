@@ -48,17 +48,17 @@
                 ip_pub1: {{ info.results[count].instance.ipv4[0] }}
                 ip_priv1: {{ info.results[count].instance.ipv4[1] }}
             {%- endfor %}
-          {% if client_ips is defined %}
-          client:
-            {% set count = namespace(value=0) %}
-            {%- for ip in client_ips %}
-            - client{{ count.value | int + 1 }}:
-              instance:
-                hostname: client{{ count.value | int + 1 }}
-                ip_pub1: {{ ip }}
-            {%- set count.value = count.value + 1 %}
-            {%- endfor %}
-          {% endif %}
+#          {% if client_ips is defined %}
+#          client:
+#            {% set count = namespace(value=0) %}
+#            {%- for ip in client_ips %}
+#            - client{{ count.value | int + 1 }}:
+#              instance:
+#                hostname: client{{ count.value | int + 1 }}
+#                ip_pub1: {{ ip }}
+#            {%- set count.value = count.value + 1 %}
+#            {%- endfor %}
+#          {% endif %}
 
   - name: add slurm nodes to inventory
     blockinfile:
