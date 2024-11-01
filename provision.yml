@@ -12,7 +12,8 @@
   tasks:
   - name: creating gluster servers
     linode.cloud.instance:
-      label: '{{ instance_prefix }}{{ item | int + 1 }}-{{ uuid }}'
+      #label: '{{ instance_prefix }}{{ item | int + 1 }}-{{ uuid }}'
+      label: '{{ instance_prefix }}-{{ "%02d" | format(item | init + 1 ) }}-{{ uuid }}'
       api_token: '{{ token }}'
       type: '{{ type }}'
       region: '{{ region }}'
