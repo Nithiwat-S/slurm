@@ -4,3 +4,9 @@
     name: nfs-kernel-server
     state: present
   delegate_to: "{{groups['slurm_servers'][0]}}"
+
+- name: wait for apt process to finish
+  wait_for:
+    path: /var/lib/dpkg/lock  
+    state: absent 
+    timeout: 300 become:
