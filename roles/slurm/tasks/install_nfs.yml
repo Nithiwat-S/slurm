@@ -32,15 +32,15 @@
 #  loop_control:
 #    index_var: count
 
-- name: configure hostnames55555
-  hostname:
-    use: systemd
-    name: "{{ slurm_data.server[count].instance.hostname }}"
-  run_once: true
-  delegate_to: "{{ item }}"
-  loop: "{{ groups['slurm_servers'] }}"
-  loop_control:
-    index_var: count
+##- name: configure hostnames55555
+##  hostname:
+##    use: systemd
+##    name: "{{ slurm_data.server[count].instance.hostname }}"
+##  run_once: true
+##  delegate_to: "{{ item }}"
+##  loop: "{{ groups['slurm_servers'] }}"
+##  loop_control:
+##    index_var: count
 
 #- name: Mount NFS share 
 #  command: mount -a 
