@@ -34,7 +34,6 @@
     mode: '0600'
   loop:
     - { userdir: '/root', user: 'root' }
-    - { userdir: '/home/{{ username }}', user: '{{ username }}' }
   when: add_keys_prompt == 'yes'
 
 - name: remove ansible from authorized_keys
@@ -68,3 +67,16 @@
     mode: '0600'
     owner: "root"
     group: "root"
+
+- name: create user wrfroms
+  user:
+    name: wrfroms
+    password: "{{ 'test#123456' | password_hash('sha512') }}"
+  delegate_to: "{{ item }}"
+
+## set wrfroms account passwords
+#- name: set wrfroms password on remote nodes
+#  lineinfile:
+#    path: /etc/shadow
+#    regexp: '^wrfroms.+'
+#    line: '{{ root_password }}'
