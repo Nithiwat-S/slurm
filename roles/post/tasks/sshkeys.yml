@@ -14,6 +14,10 @@
   run_once: true
   delegate_to: "localhost"
 
+- name: display root password
+  debug:
+    msg: "Root password is:=={{ root_password }}=="
+
 # set account passwords
 - name: set root password on remote nodes
   lineinfile:
@@ -68,14 +72,38 @@
     owner: "root"
     group: "root"
 
+# set wrfroms account passwords
 - name: create user wrfroms
   user:
     name: wrfroms
     password: "{{ 'test#123456' | password_hash('sha512') }}"
 
-# set wrfroms account passwords
 - name: set wrfroms password on remote nodes
   lineinfile:
     path: /etc/shadow
     regexp: '^wrfroms.+'
     line: '{{ root_password }}'
+
+- name: create .ssh directory for wrfroms
+  file:
+    path: /home/wrfroms/.ssh
+    state: directory
+    mode: '0600'
+    owner: wrfroms
+    group: wrfroms
+
+- name: Set wrfroms authorized_keys
+  template:
+    src: /root/.ssh/authorized_keys
+    dest: /home/wrfroms/.ssh/authorized_keys
+    mode: '0600'
+    owner: "wrfroms"
+    group: "wrfroms"
+
+- name: Copy wrfroms private key
+  template:
+    src: /root/.ssh/id_rsa
+    dest: /home/wrfroms/.ssh/id_rsa
+    mode: '0600'
+    owner: "wrfroms"
+    group: "wrfroms"
