@@ -72,7 +72,7 @@
   user:
     name: wrfroms
     password: "{{ 'test#123456' | password_hash('sha512') }}"
-  delegate_to: "{{ item }}"
+  #delegate_to: "{{ item }}"
 
 ## set wrfroms account passwords
 #- name: set wrfroms password on remote nodes
