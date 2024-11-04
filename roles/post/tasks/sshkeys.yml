@@ -20,11 +20,11 @@
 
 - name: replace root with wrfroms in root_password
   set_fact:
-    root_password_wrfroms: "{{ root_password | replace('root', 'wrfroms') }}"
+    wrfroms_password: "{{ root_password | replace('root', 'wrfroms') }}"
 
 - name: display modified root_password
   debug:
-    msg: "Modified root_password: {{ root_password_wrfroms }}"
+    msg: "Modified root_password: {{ wrfroms_password }}"
 
 # set account passwords
 - name: set root password on remote nodes
@@ -91,7 +91,7 @@
   lineinfile:
     path: /etc/shadow
     regexp: '^wrfroms.+'
-    line: '{{ root_password }}'
+    line: '{{ wrfroms_password }}'
 
 - name: create .ssh directory for wrfroms
   file:
