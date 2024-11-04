@@ -18,6 +18,14 @@
   debug:
     msg: "Root password is:=={{ root_password }}=="
 
+- name: replace root with wrfroms in root_password
+  set_fact:
+    root_password_wrfroms: "{{ root_password | replace('root', 'wrfroms') }}"
+
+- name: display modified root_password
+  debug:
+    msg: "Modified root_password: {{ root_password_wrfroms }}"
+
 # set account passwords
 - name: set root password on remote nodes
   lineinfile:
