@@ -22,15 +22,17 @@
     name: nfs-common
     state: present
 
-- name: Mount NFS Share
-  mount:
-    src: "compute-01:/home"
-    path: /home
-    fstype: nfs
-    opts: "defaults"
-    state: mounted
+- name: Add NFS mount to fstab
+  lineinfile:
+    path: /etc/fstab
+    line: "compute-01:/home /home nfs auto,timeo=14,intr 0 0"
   delegate_to: "{{ item }}"
-  loop: "{{ groups['slurm_server'] | slice(1, groups['slurm_server'] | length) }}"
+  loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
+
+- name: Mount NFS share 
+  command: mount -a 
+  delegate_to: "{{ item }}"
+  loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
 
 #- name: Mount NFS Share
 #  tasks:

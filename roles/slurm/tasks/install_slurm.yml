@@ -1,0 +1,6 @@
+---
+
+- name: install libmunge-dev libmunge2 munge
+  apt:
+    name: libmunge-dev libmunge2 munge
+    state: present
