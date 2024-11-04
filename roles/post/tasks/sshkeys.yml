@@ -14,17 +14,9 @@
   run_once: true
   delegate_to: "localhost"
 
-- name: display root password
-  debug:
-    msg: "Root password is:=={{ root_password }}=="
-
-- name: replace root with wrfroms in root_password
+- name: replace root with wrfroms in wrfroms_password
   set_fact:
     wrfroms_password: "{{ root_password | replace('root', 'wrfroms') }}"
-
-- name: display modified root_password
-  debug:
-    msg: "Modified root_password: {{ wrfroms_password }}"
 
 # set account passwords
 - name: set root password on remote nodes
