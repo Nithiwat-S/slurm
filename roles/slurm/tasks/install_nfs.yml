@@ -9,12 +9,12 @@
   apt:
     name: nfs-common
     state: present
-  delegate_to: "{{ item }}"
 
 - name: add export entry for /home
   lineinfile:
     path: /etc/exports
     line: "/home 192.168.0.0/16(rw,sync,no_root_squash,no_subtree_check)"
+  delegate_to: "{{groups['slurm_servers'][0]}}"
 
 - name: restart nfs-kernel-server
   systemd:
