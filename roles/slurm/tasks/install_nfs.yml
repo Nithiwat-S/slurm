@@ -1,0 +1,8 @@
+---
+- name: install nfsserver
+  apt:
+    name: nfs-kernel-server
+    state: present
+  delegate_to: "{{groups['slurm_servers'][0]}}"
+
+

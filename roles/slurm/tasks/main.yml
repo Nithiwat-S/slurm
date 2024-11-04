@@ -4,8 +4,8 @@
 - name: configure hostname
   import_tasks: hostname.yml
 
-#- name: install gluster
-#  import_tasks: install.yml
+- name: install nfs
+  import_tasks: install_nfs.yml
 
 #- name: configure SSL on Gluster
 #  import_tasks: ssl.yml
