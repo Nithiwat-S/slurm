@@ -5,11 +5,6 @@
     state: present
   delegate_to: "{{groups['slurm_servers'][0]}}"
 
-- name: install nfsclient
-  apt:
-    name: nfs-common
-    state: present
-
 - name: add export entry for /home
   lineinfile:
     path: /etc/exports
@@ -22,31 +17,44 @@
     state: restarted
     enabled: yes
 
+- name: install nfsclient
+  apt:
+    name: nfs-common
+    state: present
+
 - name: Mount NFS Share
-  hosts: all
-  become: true
-  tasks:
-    - name: Ensure mount point directory exists
-      file:
-        path: /home
-        state: directory
+  mount:
+    src: "compute-01:/home"
+    path: /home
+    fstype: nfs
+    opts: "defaults"
+    state: mounted
+  delegate_to: "{{ item }}"
+  loop: "{{ groups['slurm_server'] | slice(1, groups['slurm_server'] | length) }}"
 
-    - name: Mount NFS share
-      mount:
-        src: "compute-01:/home"
-        path: /home
-        fstype: nfs
-        opts: "defaults"
-        state: mounted
-      loop: "{{ groups['slurm_server'] | slice(1, groups['slurm_server'] | length) }}"
-      delegate_to: "{{ item }}"
-
-    - name: Ensure NFS share is mounted at boot
-      mount:
-        src: "compute-01:/home"
-        path: /home
-        fstype: nfs
-        opts: "defaults"
-        state: present
-      loop: "{{ groups['slurm_server'] | slice(1, groups['slurm_server'] | length) }}"
-      delegate_to: "{{ item }}"
+#- name: Mount NFS Share
+#  tasks:
+#    - name: Ensure mount point directory exists
+#      file:
+#        path: /home
+#        state: directory
+#
+#    - name: Mount NFS share
+#      mount:
+#        src: "compute-01:/home"
+#        path: /home
+#        fstype: nfs
+#        opts: "defaults"
+#        state: mounted
+#      loop: "{{ groups['slurm_server'] | slice(1, groups['slurm_server'] | length) }}"
+#      delegate_to: "{{ item }}"
+#
+#    - name: Ensure NFS share is mounted at boot
+#      mount:
+#        src: "compute-01:/home"
+#        path: /home
+#        fstype: nfs
+#        opts: "defaults"
+#        state: present
+#      loop: "{{ groups['slurm_server'] | slice(1, groups['slurm_server'] | length) }}"
+#      delegate_to: "{{ item }}"
