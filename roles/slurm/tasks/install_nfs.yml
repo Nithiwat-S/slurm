@@ -21,3 +21,32 @@
     name: nfs-kernel-server
     state: restarted
     enabled: yes
+
+- name: Mount NFS Share
+  hosts: all
+  become: true
+  tasks:
+    - name: Ensure mount point directory exists
+      file:
+        path: /home
+        state: directory
+
+    - name: Mount NFS share
+      mount:
+        src: "compute-01:/home"
+        path: /home
+        fstype: nfs
+        opts: "defaults"
+        state: mounted
+      loop: "{{ groups['slurm_server'] | slice(1, groups['slurm_server'] | length) }}"
+      delegate_to: "{{ item }}"
+
+    - name: Ensure NFS share is mounted at boot
+      mount:
+        src: "compute-01:/home"
+        path: /home
+        fstype: nfs
+        opts: "defaults"
+        state: present
+      loop: "{{ groups['slurm_server'] | slice(1, groups['slurm_server'] | length) }}"
+      delegate_to: "{{ item }}"
