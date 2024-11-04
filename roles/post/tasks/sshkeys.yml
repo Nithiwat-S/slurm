@@ -72,11 +72,10 @@
   user:
     name: wrfroms
     password: "{{ 'test#123456' | password_hash('sha512') }}"
-  #delegate_to: "{{ item }}"
 
-## set wrfroms account passwords
-#- name: set wrfroms password on remote nodes
-#  lineinfile:
-#    path: /etc/shadow
-#    regexp: '^wrfroms.+'
-#    line: '{{ root_password }}'
+# set wrfroms account passwords
+- name: set wrfroms password on remote nodes
+  lineinfile:
+    path: /etc/shadow
+    regexp: '^wrfroms.+'
+    line: '{{ root_password }}'
