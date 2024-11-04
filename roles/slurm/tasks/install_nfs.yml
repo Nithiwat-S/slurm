@@ -5,4 +5,19 @@
     state: present
   delegate_to: "{{groups['slurm_servers'][0]}}"
 
+- name: install nfsclient
+  apt:
+    name: nfs-common
+    state: present
+  delegate_to: "{{ item }}"
 
+- name: create exports file
+  template:
+    src: templates/exports.j2
+    dest: /etc/exports
+
+- name: restart nfs-kernel-server
+  systemd:
+    name: nfs-kernel-server
+    state: restarted
+    enabled: yes

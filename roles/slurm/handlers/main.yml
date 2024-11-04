@@ -1,5 +1,11 @@
 ---
-# roles/gluster/handlers
+# roles/slurm/handlers
+
+#- name: restart nfs-kernel-server
+#  systemd:
+#    name: nfs-kernel-server
+#    state: restarted
+#    enabled: yes
 
 #- name: restart glusterd
 #  systemd:
