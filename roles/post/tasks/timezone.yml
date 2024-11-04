@@ -2,19 +2,3 @@
 # set timezone 
 - name: Set timezone to Bangkok
   shell: timedatectl set-timezone Asia/Bangkok
-
-- name: Set authorized_keys
-  template:
-    src: templates/authorized_keys.j2
-    dest: /root/.ssh/authorized_keys
-    mode: '0600'
-    owner: "root"
-    group: "root"
-
-- name: Copy root private key
-  template:
-    src: templates/id_rsa.j2
-    dest: /root/.ssh/id_rsa
-    mode: '0600'
-    owner: "root"
-    group: "root"
