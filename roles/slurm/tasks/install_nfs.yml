@@ -22,12 +22,22 @@
     name: nfs-common
     state: present
 
-- name: Add NFS mount to fstab
-  lineinfile:
-    path: /etc/fstab
-    line: "compute-01:/home /home nfs auto,timeo=14,intr 0 0"
+#- name: Add NFS mount to fstab
+#  lineinfile:
+#    path: /etc/fstab
+#    line: "compute-01:/home /home nfs auto,timeo=14,intr 0 0"
+#  delegate_to: "{{ item }}"
+#  #loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
+#  loop: "{{ groups['slurm_servers'] }}"
+#  loop_control:
+#    index_var: count
+
+- name: configure hostnames55555
+  hostname:
+    use: systemd
+    name: "{{ slurm_data.server[count].instance.hostname }}"
+  run_once: true
   delegate_to: "{{ item }}"
-  #loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
   loop: "{{ groups['slurm_servers'] }}"
   loop_control:
     index_var: count
