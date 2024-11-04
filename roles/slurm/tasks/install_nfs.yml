@@ -9,4 +9,4 @@
   wait_for:
     path: /var/lib/dpkg/lock  
     state: absent 
-    timeout: 300 become:
+    timeout: 300
