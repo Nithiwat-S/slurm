@@ -7,15 +7,9 @@ fi
 
 ## Deployment Variables
 # <UDF name="token_password" label="Your Linode API token" />
-# <UDF name="user_name" label="The limited sudo user to be created in the cluster" default="wrfroms"/>
-# <UDF name="sslheader" label="SSL Information" header="Yes" default="Yes" required="Yes">
-# <UDF name="clusterheader" label="Cluster Settings" default="Yes" header="Yes">
-# <UDF name="add_ssh_keys" label="Add Account SSH Keys to All Nodes?" oneof="yes,no"  default="yes" />
 # <UDF name="cluster_size" label="slurm cluster size" default="2" oneof="2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18" />
 
 # git repo
-#git_username="akamai-compute-marketplace"
-#export GIT_REPO="https://github.com/$git_username/glusterfs-occ.git"
 export GIT_REPO="https://github.com/Nithiwat-S/slurm.git"
 export UUID=$(uuidgen | awk -F - '{print $1}')
 

@@ -11,10 +11,10 @@
     state: present
   delegate_to: "{{ item }}"
 
-- name: create exports file
-  template:
-    src: templates/exports.j2
-    dest: /etc/exports
+#- name: create exports file
+#  template:
+#    src: templates/exports.j2
+#    dest: /etc/exports
 
 - name: restart nfs-kernel-server
   systemd:

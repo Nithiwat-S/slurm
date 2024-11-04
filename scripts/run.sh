@@ -79,8 +79,8 @@ function ansible:build {
   image: ${LINODE_PARAMS[2]}
   linode_tags: ${TAGS}
   # sudo user
-  sudo_username: ${USER_NAME}
-  username: ${USER_NAME}
+  #sudo_username: ${USER_NAME}
+  #username: ${USER_NAME}
   uuid: ${UUID}  
   cluster_size: ${CLUSTER_SIZE}
 EOF

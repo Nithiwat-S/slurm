@@ -1,16 +1,6 @@
 ---
 # linode slurm ansible playbook
 
-## cluster pre-check
-#- name: pre-check
-#  hosts: slurm_servers
-#  user: root
-#  vars_files:
-#    - group_vars/slurm/vars
-#    - group_vars/slurm/secret_vars
-#  roles:
-#    - precheck
-
 # slurm servers
 - name: configure slurm servers
   hosts: slurm_servers

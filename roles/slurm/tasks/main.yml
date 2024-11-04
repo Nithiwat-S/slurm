@@ -7,8 +7,3 @@
 - name: install nfs
   import_tasks: install_nfs.yml
 
-#- name: configure SSL on Gluster
-#  import_tasks: ssl.yml
-
-#- name: configure gluster service
-#  import_tasks: configure.yml
