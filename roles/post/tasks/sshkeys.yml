@@ -108,3 +108,19 @@
     mode: '0600'
     owner: "wrfroms"
     group: "wrfroms"
+
+- name: Copy root ssh config
+  files:
+    src: files/ssh.config
+    dest: /root/.ssh/config
+    mode: '0644'
+    owner: "root"
+    group: "root"
+
+- name: Copy wrfroms ssh config
+  files:
+    src: files/ssh.config
+    dest: /home/wrfroms/.ssh/config
+    mode: '0644'
+    owner: "wrfroms"
+    group: "wrfroms"
