@@ -6,19 +6,20 @@
 
 - name: install nfsserver
   import_tasks: install_nfsserver.yml
-  #run_once: true
+  run_once: true
   delegate_to: localhost
 
-- name: Debug msg
-  debug:
-    msg: "={{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}="
+#- name: Debug msg
+#  debug:
+#    msg: "={{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}="
+#    #"msg": "=[['localhost', '172.236.149.152', 2]]="
 
-#- name: install nfsclient
-#  import_tasks: install_nfsclient.yml
-#  delegate_to: "{{ item }}"
-#  loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
-#  loop_control:
-#    index_var: count
+- name: install nfsclient
+  import_tasks: install_nfsclient.yml
+  delegate_to: "{{ item }}"
+  loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
+  loop_control:
+    index_var: count
 
 #- name: Add NFS mount to fstab
 #  lineinfile:
