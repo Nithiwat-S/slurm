@@ -1,0 +1,7 @@
+---
+
+- name: install nfsserver
+  apt:
+    pkg:
+    - nfs-kernel-server
+    state: present
