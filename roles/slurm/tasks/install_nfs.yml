@@ -1,19 +1,9 @@
 ---
-- name: remove lock file
-  file:
-    path: /var/lib/dpkg/lock-frontend
-    state: absent
-  run_once: true
-  delegate_to: localhost
       
 - name: install nfsserver
   apt:
-    name: nfs-kernel-server
+    pkg:
+    - nfs-kernel-server
     state: present
+    install_recommends: yes
   delegate_to: localhost
-
-#- name: wait for apt process to finiupdate_cache: yessh
-#  wait_for:
-#    path: /var/lib/dpkg/lock  
-#    state: absent 
-#    timeout: 300
