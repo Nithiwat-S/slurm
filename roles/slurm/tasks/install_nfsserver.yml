@@ -5,3 +5,14 @@
     pkg:
     - nfs-kernel-server
     state: present
+
+- name: add export entry for /home
+  lineinfile:
+    path: /etc/exports
+    line: "/home 192.168.0.0/16(rw,sync,no_root_squash,no_subtree_check)"
+
+- name: restart nfs-kernel-server
+  systemd:
+    name: nfs-kernel-server
+    state: restarted
+    enabled: yes

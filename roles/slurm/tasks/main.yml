@@ -6,5 +6,26 @@
 
 - name: install nfsserver
   import_tasks: install_nfsserver.yml
-  run_once: true
+  #run_once: true
   delegate_to: localhost
+
+- name: Debug msg
+  debug:
+    msg: "={{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}="
+
+#- name: install nfsclient
+#  import_tasks: install_nfsclient.yml
+#  delegate_to: "{{ item }}"
+#  loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
+#  loop_control:
+#    index_var: count
+
+#- name: Add NFS mount to fstab
+#  lineinfile:
+#    path: /etc/fstab
+#    line: "compute-01:/home /home nfs auto,timeo=14,intr 0 0"
+#  delegate_to: "{{ item }}"
+#  #loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
+#  loop: "{{ groups['slurm_servers'] }}"
+#  loop_control:
+#    index_var: count
