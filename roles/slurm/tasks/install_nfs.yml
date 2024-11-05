@@ -4,7 +4,6 @@
   apt:
     name: nfs-kernel-server
     state: present
-    update_cache: yes
   delegate_to: localhost
 
 #- name: wait for apt process to finiupdate_cache: yessh
