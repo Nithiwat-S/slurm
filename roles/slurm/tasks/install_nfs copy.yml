@@ -3,7 +3,7 @@
   apt:
     name: nfs-kernel-server
     state: present
-  delegate_to: "{{groups['slurm_servers'][0]}}"
+  delegate_to: "{{ groups['slurm_servers'][0] }}"
 
 #- name: add export entry for /home
 #  lineinfile:

@@ -1,5 +1,9 @@
 ---
-      
+
+- name: Debug msg
+  debug:
+    msg: "={{ groups['slurm_servers'][0] }}="
+
 - name: install nfsserver
   apt:
     pkg:
