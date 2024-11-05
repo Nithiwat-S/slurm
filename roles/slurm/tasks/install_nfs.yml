@@ -6,4 +6,5 @@
     - nfs-kernel-server
     state: present
     install_recommends: yes
-  delegate_to: "{{groups['slurm_servers'][0]}}"
+  delegate_to: "localhost"
+  
