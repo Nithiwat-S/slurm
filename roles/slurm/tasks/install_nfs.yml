@@ -3,6 +3,12 @@
 - name: Debug msg
   debug:
     msg: "={{ groups['slurm_servers'][0] }}="
+  delegate_to: "localhost"
+
+- name: Debug msg2
+  debug:
+    msg: "={{ groups['slurm_servers'][1] }}="
+  delegate_to: "localhost"
 
 - name: install nfsserver
   apt:
