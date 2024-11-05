@@ -14,10 +14,19 @@
 #    msg: "={{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}="
 #    #"msg": "=[['localhost', '172.236.149.152', 2]]="
 
+#- name: install nfsclient
+#  import_tasks: install_nfsclient.yml
+#  delegate_to: "{{ item }}"
+#  loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
+#  loop_control:
+#    index_var: count
+
+
 - name: install nfsclient
   import_tasks: install_nfsclient.yml
+  run_once: true
   delegate_to: "{{ item }}"
-  loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
+  loop: "{{ groups['slurm_servers'] }}"
   loop_control:
     index_var: count
 
