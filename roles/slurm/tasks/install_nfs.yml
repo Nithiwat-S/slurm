@@ -3,6 +3,8 @@
   file:
     path: /var/lib/dpkg/lock-frontend
     state: absent
+  run_once: true
+  delegate_to: localhost
       
 - name: install nfsserver
   apt:
