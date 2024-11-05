@@ -9,7 +9,7 @@
 #  lineinfile:
 #    path: /etc/exports
 #    line: "/home 192.168.0.0/16(rw,sync,no_root_squash,no_subtree_check)"
-#  delegate_to: "{{groups['slurm_servers'][0]}}"
+#  delegate_to: "{{ groups['slurm_servers'][0] }}"
 
 #- name: restart nfs-kernel-server
 #  systemd:

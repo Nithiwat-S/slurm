@@ -4,5 +4,7 @@
 - name: configure hostname
   import_tasks: hostname.yml
 
-- name: install nfs
-  import_tasks: install_nfs.yml
+- name: install nfsserver
+  import_tasks: install_nfsserver.yml
+  run_once: true
+  delegate_to: localhost
