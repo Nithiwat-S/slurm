@@ -1,5 +1,9 @@
 ---
-
+- name: remove lock file
+  file:
+    path: /var/lib/dpkg/lock-frontend
+    state: absent
+      
 - name: install nfsserver
   apt:
     name: nfs-kernel-server
