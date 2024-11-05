@@ -1,15 +1,13 @@
 ---
-- name: apt update
-  apt:
-    update_cache: yes
 
 - name: install nfsserver
   apt:
     name: nfs-kernel-server
     state: present
-  delegate_to: "{{groups['slurm_servers'][0]}}"
+    update_cache: yes
+  delegate_to: localhost
 
-#- name: wait for apt process to finish
+#- name: wait for apt process to finiupdate_cache: yessh
 #  wait_for:
 #    path: /var/lib/dpkg/lock  
 #    state: absent 
