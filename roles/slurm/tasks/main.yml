@@ -24,11 +24,12 @@
 
 - name: install nfsclient
   #import_tasks: install_nfsclient.yml
-  debug:
-    msg: "==slurm_servers_no_localhost=={{ slurm_servers_no_localhost }}===="
+  apt:
+    pkg:
+    - nfs-common
+    state: present
   run_once: true
   delegate_to: "{{ item }}"
   loop: "{{ slurm_servers_no_localhost }}"
   loop_control:
     index_var: count
-
