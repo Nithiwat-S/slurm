@@ -8,17 +8,24 @@
   import_tasks: install_nfsserver.yml
   run_once: true
   delegate_to: "localhost"
+ 
+- name: Copy slurm_servers group to a new variable without localhost
+  set_fact:
+    slurm_servers_no_localhost: "{{ groups['slurm_servers'] | difference(['localhost']) }}"
 
-- name: msg55555
+- name: msg66666
   debug:
-    msg: "===={{ slurm_data.server[count].instance.hostname }}===="
+    msg: "==slurm_servers_no_localhost=={{ slurm_servers_no_localhost }}===="
   run_once: true
   delegate_to: "{{ item }}"
-  #loop: "{{ groups['slurm_servers'] }}"
-  loop: "{{ groups['slurm_servers'] | slice(1, groups['slurm_servers'] | length) }}"
+  loop: "{{ slurm_servers_no_localhost }}"
   loop_control:
     index_var: count
-    
 
-
-
+- name: install nfssclient
+  import_tasks: install_nfsclient.yml
+  run_once: true
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
