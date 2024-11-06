@@ -1,6 +1,6 @@
 ---
 
-- name: install nfsserver
+- name: install nfsclient
   apt:
     pkg:
     - nfs-common
