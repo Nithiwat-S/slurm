@@ -29,3 +29,11 @@
 #  loop: "{{ slurm_servers_no_localhost }}"
 #  loop_control:
 #    index_var: count
+- name: install nfssclient
+  import_tasks: install_nfsclient.yml
+  run_once: true
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
+

@@ -1,8 +1,9 @@
 ---
 
-- name: install nfsclient
+- name: install nfsserver
   apt:
-    name: nfs-common
+    pkg:
+    - nfs-common
     state: present
 
 #- name: Add NFS mount to fstab
