@@ -5,7 +5,6 @@
     slurm_servers_no_localhost: "{{ groups['slurm_servers'] | difference(['localhost']) }}"
 
 - name: install nfsclient
-  #import_tasks: install_nfsclient.yml
   apt:
     pkg:
     - nfs-common
