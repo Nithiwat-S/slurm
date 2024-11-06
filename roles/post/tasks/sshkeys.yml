@@ -117,10 +117,10 @@
     owner: "root"
     group: "root"
 
-#- name: Copy wrfroms ssh config
-#  files:
-#    src: files/ssh.config
-#    dest: /home/wrfroms/.ssh/config
-#    mode: '0644'
-#    owner: "wrfroms"
-#    group: "wrfroms"
+- name: Copy wrfroms ssh config
+  template:
+    src: templates/ssh.config.j2
+    dest: /home/wrfroms/.ssh/config
+    mode: '0644'
+    owner: "wrfroms"
+    group: "wrfroms"

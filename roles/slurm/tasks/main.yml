@@ -8,38 +8,6 @@
   import_tasks: install_nfsserver.yml
   run_once: true
   delegate_to: "localhost"
- 
-- name: Copy slurm_servers group to a new variable without localhost
-  set_fact:
-    slurm_servers_no_localhost: "{{ groups['slurm_servers'] | difference(['localhost']) }}"
-
-#- name: msg66666
-#  debug:
-#    msg: "==slurm_servers_no_localhost=={{ slurm_servers_no_localhost }}===="
-#  run_once: true
-#  delegate_to: "{{ item }}"
-#  loop: "{{ slurm_servers_no_localhost }}"
-#  loop_control:
-#    index_var: count
 
 - name: install nfsclient
-  #import_tasks: install_nfsclient.yml
-  apt:
-    pkg:
-    - nfs-common
-    state: present
-  run_once: true
-  delegate_to: "{{ item }}"
-  loop: "{{ slurm_servers_no_localhost }}"
-  loop_control:
-    index_var: count
-
-- name: Add NFS mount to fstab
-  lineinfile:
-    path: /etc/fstab
-    line: "compute-01:/home /home nfs auto,timeo=14,intr 0 0"
-  run_once: true
-  delegate_to: "{{ item }}"
-  loop: "{{ slurm_servers_no_localhost }}"
-  loop_control:
-    index_var: count
+  import_tasks: install_nfsclient.yml
