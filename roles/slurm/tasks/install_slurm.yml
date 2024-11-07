@@ -2,7 +2,10 @@
 
 - name: install libmunge-dev libmunge2 munge
   apt:
-    name: libmunge-dev libmunge2 munge
+    pkg:
+    - libmunge-dev
+    - libmunge2
+    - munge
     state: present
 
 #- name: Copy slurm_servers group to a new variable without localhost

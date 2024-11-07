@@ -2,7 +2,9 @@
 
 - name: install slurmctld mailutils
   apt:
-    name: slurmctld mailutils
+    name:
+      - slurmctld
+      - mailutils
     state: present
 
 - name: Copy root ssh config
