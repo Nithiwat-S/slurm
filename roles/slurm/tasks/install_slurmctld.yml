@@ -1,0 +1,34 @@
+---
+
+- name: install slurmctld mailutils
+  apt:
+    name: slurmctld mailutils
+    state: present
+
+- name: Copy root ssh config
+  template:
+    src: templates/slurm.conf.j2
+    dest: /etc/slurm/slurm.conf
+    mode: '0644'
+    owner: "slurm"
+    group: "slurm"
+
+#- name: restart munge
+#  systemd:
+#    name: munge
+#    state: restarted
+#    enabled: yes
+
+- name: Sync munge directory to /home/etc
+  command: rsync -av /etc/slurm /home/etc/slurm
+
+- name: Remove original /etc/slurm directory
+  file:
+    path: /etc/slurm
+    state: absent
+
+- name: Create symlink from /home/etc/slurm to /etc/slurm
+  file:
+    src: /home/etc/slurm
+    dest: /etc/slurm
+    state: link

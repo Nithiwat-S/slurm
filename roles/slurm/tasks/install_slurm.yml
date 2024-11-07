@@ -5,28 +5,34 @@
     name: libmunge-dev libmunge2 munge
     state: present
 
-#- name: restart munge
-#  systemd:
-#    name: munge
-#    state: restarted
-#    enabled: yes
+#- name: Copy slurm_servers group to a new variable without localhost
+#  set_fact:
+#    slurm_servers_no_localhost: "{{ groups['slurm_servers'] | difference(['localhost']) }}"
 
-#- name: Create directory in /home
-#  file:
-#    path: /home/etc
-#    state: directory
-#    mode: '0755'
+- name: install slurmd
+  apt:
+    pkg:
+    - slurmd
+    state: present
+  run_once: true
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
 
-#- name: Sync munge directory to /home/etc
-#  command: rsync -av /etc/munge /home/etc/munge
+- name: Remove original /etc/slurm directory
+  file:
+    path: /etc/slurm
+    state: absent
 
-#- name: Remove original /etc/munge directory
-#  file:
-#    path: /etc/munge
-#    state: absent
+- name: Create symlink from /home/etc/slurm to /etc/slurm
+  file:
+    src: /home/etc/slurm
+    dest: /etc/slurm
+    state: link
 
-#- name: Create symlink from /home/etc/munge to /etc/munge
-#  file:
-#    src: /home/etc/munge
-#    dest: /etc/munge
-#    state: link
+- name: restart slurmd
+  systemd:
+    name: slurmd
+    state: restarted
+    enabled: yes
