@@ -15,14 +15,8 @@
     owner: "slurm"
     group: "slurm"
 
-#- name: restart munge
-#  systemd:
-#    name: munge
-#    state: restarted
-#    enabled: yes
-
 - name: Sync munge directory to /home/etc
-  command: rsync -av /etc/slurm /home/etc/slurm
+  command: rsync -av /etc/slurm /home/etc/
 
 - name: Remove original /etc/slurm directory
   file:
@@ -34,3 +28,9 @@
     src: /home/etc/slurm
     dest: /etc/slurm
     state: link
+
+#- name: restart munge
+#  systemd:
+#    name: munge
+#    state: restarted
+#    enabled: yes

@@ -15,7 +15,7 @@
     mode: '0755'
 
 - name: Sync munge directory to /home/etc
-  command: rsync -av /etc/munge /home/etc/munge
+  command: rsync -av /etc/munge /home/etc/
 
 - name: Remove original /etc/munge directory
   file:
