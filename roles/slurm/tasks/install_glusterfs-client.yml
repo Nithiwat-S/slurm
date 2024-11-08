@@ -1,0 +1,20 @@
+---
+
+- name: install lusterfs-client
+  apt:
+    pkg:
+    - glusterfs-client
+    state: present
+
+- name: Create directory in /var/lib/glusterd
+  file:
+    path: /var/lib/glusterd
+    state: directory
+    mode: '0755'
+
+- name: Create file /var/lib/glusterd/secure-access
+  file:
+    path: /var/lib/glusterd/secure-access
+    state: touch
+    mode: '0644'
+
