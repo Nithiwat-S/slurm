@@ -15,7 +15,7 @@
     owner: "slurm"
     group: "slurm"
 
-- name: Sync munge directory to /home/etc
+- name: Sync slurm directory to /home/etc
   command: rsync -av /etc/slurm /home/etc/
 
 - name: Remove original /etc/slurm directory
@@ -29,8 +29,16 @@
     dest: /etc/slurm
     state: link
 
-#- name: restart munge
-#  systemd:
-#    name: munge
-#    state: restarted
-#    enabled: yes
+- name: Copy slurm config
+  template:
+    src: templates/slurm.conf.j2
+    dest: /etc/slurm/slurm.conf
+    mode: '0644'
+    owner: "slurm"
+    group: "slurm"
+
+- name: restart slurmctld
+  systemd:
+    name: slurmctld
+    state: restarted
+    enabled: yes
