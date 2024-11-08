@@ -3,9 +3,9 @@
 - name: install slurmctld
   apt:
     pkg:
-      - slurmctld
-      - mailutils
-      - slurmd 
+    - slurmctld
+    - mailutils
+    - slurmd 
     state: present
 
 - name: Copy root ssh config
