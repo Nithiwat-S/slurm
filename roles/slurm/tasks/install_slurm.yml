@@ -27,15 +27,30 @@
   file:
     path: /etc/slurm
     state: absent
+  run_once: true
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
 
 - name: Create symlink from /home/etc/slurm to /etc/slurm
   file:
     src: /home/etc/slurm
     dest: /etc/slurm
     state: link
+  run_once: true
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
 
 - name: restart slurmd
   systemd:
     name: slurmd
     state: restarted
     enabled: yes
+  run_once: true
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count

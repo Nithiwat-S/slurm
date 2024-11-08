@@ -1,10 +1,11 @@
 ---
 
-- name: install slurmctld mailutils
+- name: install slurmctld
   apt:
     name:
       - slurmctld
       - mailutils
+      - slurmd 
     state: present
 
 - name: Copy root ssh config
@@ -40,5 +41,11 @@
 - name: restart slurmctld
   systemd:
     name: slurmctld
+    state: restarted
+    enabled: yes
+
+- name: restart slurmd
+  systemd:
+    name: slurmd
     state: restarted
     enabled: yes
