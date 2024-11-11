@@ -6,6 +6,7 @@
     - libmunge-dev
     - libmunge2
     - munge
+    - mpich
     state: present
 
 #- name: Copy slurm_servers group to a new variable without localhost

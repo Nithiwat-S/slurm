@@ -6,6 +6,7 @@
     - slurmctld
     - mailutils
     - slurmd 
+    - mpich
     state: present
 
 - name: Copy root ssh config
