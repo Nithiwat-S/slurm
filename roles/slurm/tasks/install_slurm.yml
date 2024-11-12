@@ -17,6 +17,7 @@
   apt:
     pkg:
     - slurmd
+    - slurm-client
     state: present
   run_once: true
   delegate_to: "{{ item }}"
