@@ -1,18 +1,2 @@
 ---
 # roles/slurm/handlers
-
-#- name: restart nfs-kernel-server
-#  systemd:
-#    name: nfs-kernel-server
-#    state: restarted
-#    enabled: yes
-
-#- name: restart glusterd
-#  systemd:
-#    name: glusterd
-#    state: restarted
-
-#- name: start gluster volume
-#  gluster.gluster.gluster_volume:
-#    state: started
-#    name: data-volume

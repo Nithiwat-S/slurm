@@ -14,10 +14,6 @@
   run_once: true
   delegate_to: "localhost"
 
-- name: replace root with wrfroms in wrfroms_password
-  set_fact:
-    wrfroms_password: "{{ root_password | replace('root', 'wrfroms') }}"
-
 # set account passwords
 - name: set root password on remote nodes
   lineinfile:
@@ -38,89 +34,95 @@
     mode: '0600'
   loop:
     - { userdir: '/root', user: 'root' }
+    - { userdir: '/home/{{ username }}', user: '{{ username }}' }
   when: add_keys_prompt == 'yes'
 
-- name: remove ansible from authorized_keys
-  lineinfile:
-    dest: /root/.ssh/authorized_keys
-    state: absent
-    regexp: '^.+ansible$'
+#- name: remove ansible from authorized_keys
+#  lineinfile:
+#    dest: /root/.ssh/authorized_keys
+#    state: absent
+#    regexp: '^.+ansible$'
 
-- name: remove ansible ssh keys
-  file:
-    path: '{{ item }}'
-    state: absent
-  run_once: true
-  delegate_to: localhost
-  loop:
-    - '{{ ansible_env.HOME }}/.ssh/id_ansible_ed25519'
-    - '{{ ansible_env.HOME }}/.ssh/id_ansible_ed25519.pub'
+#- name: remove ansible ssh keys
+#  file:
+#    path: '{{ item }}'
+#    state: absent
+#  run_once: true
+#  delegate_to: localhost
+#  loop:
+#    - '{{ ansible_env.HOME }}/.ssh/id_ansible_ed25519'
+#    - '{{ ansible_env.HOME }}/.ssh/id_ansible_ed25519.pub'
 
-- name: Set root authorized_keys
-  template:
-    src: templates/authorized_keys.j2
-    dest: /root/.ssh/authorized_keys
-    mode: '0600'
-    owner: "root"
-    group: "root"
+#- name: Set root authorized_keys
+#  template:
+#    src: templates/authorized_keys.j2
+#    dest: /root/.ssh/authorized_keys
+#    mode: '0600'
+#    owner: "root"
+#    group: "root"
 
-- name: Copy root private key
-  template:
-    src: templates/id_rsa.j2
-    dest: /root/.ssh/id_rsa
-    mode: '0600'
-    owner: "root"
-    group: "root"
+#- name: Copy root private key
+#  template:
+#    src: templates/id_rsa.j2
+#    dest: /root/.ssh/id_rsa
+#    mode: '0600'
+#    owner: "root"
+#    group: "root"
 
-# set wrfroms account passwords
-- name: create user wrfroms
-  user:
-    name: wrfroms
-    password: "{{ 'test#123456' | password_hash('sha512') }}"
-    shell: /bin/bash
+## set wrfroms account passwords
+#- name: create user wrfroms
+#  user:
+#    name: wrfroms
+#    password: "{{ 'test#123456' | password_hash('sha512') }}"
+#    shell: /bin/bash
 
-- name: set wrfroms password on remote nodes
-  lineinfile:
-    path: /etc/shadow
-    regexp: '^wrfroms.+'
-    line: '{{ wrfroms_password }}'
+#- name: set wrfroms password on remote nodes
+#  lineinfile:
+#    path: /etc/shadow
+#    regexp: '^wrfroms.+'
+#    line: '{{ wrfroms_password }}'
 
-- name: create .ssh directory for wrfroms
-  file:
-    path: /home/wrfroms/.ssh
-    state: directory
-    mode: '0700'
-    owner: wrfroms
-    group: wrfroms
+#- name: create .ssh directory for wrfroms
+#  file:
+#    path: /home/wrfroms/.ssh
+#    state: directory
+#    mode: '0700'
+#    owner: wrfroms
+#    group: wrfroms
 
-- name: Set wrfroms authorized_keys
-  template:
-    src: /root/.ssh/authorized_keys
-    dest: /home/wrfroms/.ssh/authorized_keys
-    mode: '0600'
-    owner: "wrfroms"
-    group: "wrfroms"
+#- name: Set wrfroms authorized_keys
+#  template:
+#    src: /root/.ssh/authorized_keys
+#    dest: /home/wrfroms/.ssh/authorized_keys
+#    mode: '0600'
+#    owner: "wrfroms"
+#    group: "wrfroms"
 
-- name: Copy wrfroms private key
-  template:
-    src: /root/.ssh/id_rsa
-    dest: /home/wrfroms/.ssh/id_rsa
-    mode: '0600'
-    owner: "wrfroms"
-    group: "wrfroms"
+#- name: Copy wrfroms private key
+#  template:
+#    src: /root/.ssh/id_rsa
+#    dest: /home/wrfroms/.ssh/id_rsa
+#    mode: '0600'
+#    owner: "wrfroms"
+#    group: "wrfroms"
 
-- name: Copy root ssh config
-  template:
-    src: templates/ssh.config.j2
-    dest: /root/.ssh/config
-    mode: '0644'
-    owner: "root"
-    group: "root"
+#- name: Copy root ssh config
+#  template:
+#    src: templates/ssh.config.j2
+#    dest: /root/.ssh/config
+#    mode: '0644'
+#    owner: "root"
+#    group: "root"
 
-- name: Copy wrfroms ssh config
-  template:
-    src: templates/ssh.config.j2
-    dest: /home/wrfroms/.ssh/config
-    mode: '0644'
-    owner: "wrfroms"
-    group: "wrfroms"
+#- name: Copy wrfroms ssh config
+#  template:
+#    src: templates/ssh.config.j2
+#    dest: /home/wrfroms/.ssh/config
+#    mode: '0644'
+#    owner: "wrfroms"
+#    group: "wrfroms"
+
+#****************
+#- name: replace root with wrfroms in wrfroms_password
+#  set_fact:
+#    wrfroms_password: "{{ root_password | replace('root', 'wrfroms') }}"
