@@ -21,24 +21,21 @@
     regexp: '^root.+'
     line: '{{ root_password }}'
 
-- name: copy shadow1
-  copy:
-    src: /etc/shadow
-    dest: /etc/shadow1
-  run_once: true
-  delegate_to: "localhost"
+- name: set user_password
+  set_fact:
+    user_password: "{{ root_password | regex_replace('^root', '{{ username }}') }}"
 
 # set user passwords
 - name: set user password
   lineinfile:
     path: /etc/shadow
     regexp: '^{{ username }}.+'
-    line: '{{ root_password }}'
+    line: '{{ user_password }}'
 
 
-- name: set ssh facts
-  set_fact:
-    add_keys_prompt: '{{ add_keys_prompt }}'
+#- name: set ssh facts
+#  set_fact:
+#    add_keys_prompt: '{{ add_keys_prompt }}'
 
 - name: add account ssh keys
   copy:
@@ -47,10 +44,12 @@
     owner: "{{ item.user }}"
     group: "{{ item.user }}"
     mode: '0600'
+  run_once: true
+  delegate_to: localhost
   loop:
     - { userdir: '/root', user: 'root' }
     - { userdir: '/home/{{ username }}', user: '{{ username }}' }
-  when: add_keys_prompt == 'yes'
+  #when: add_keys_prompt == 'yes'
 
 #- name: remove ansible from authorized_keys
 #  lineinfile:
