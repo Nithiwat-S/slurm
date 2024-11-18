@@ -79,28 +79,11 @@ function ansible:build {
   image: ${LINODE_PARAMS[2]}
   linode_tags: ${TAGS}
   # sudo user
-  #sudo_username: ${USER_NAME}
-  #username: ${USER_NAME}
+  sudo_username: ${USER_NAME}
+  username: ${USER_NAME}
   uuid: ${UUID}  
   cluster_size: ${CLUSTER_SIZE}
 EOF
-#  # write client IPs
-#  IPS=$(echo ${CLIENT_IPS} | tr ' ' '\n' | grep -Eo '^([0-9]{1,3}\.){3}[0-9]{1,3}' | sed 's/^/  - /g')
-#  if [ -z ${IPS} ]; then
-#    echo "[INFO] No valid client IP addressed found"
-#    #exit 1
-#  else
-#    cat << EOF >> ${VARS_PATH}
-#client_ips:
-#${IPS}
-#EOF
-#  fi
-
-# output:
-# client_ips:
-#   - x.x.x.x
-#   - x.x.x.x
-#   - x.x.x.x
 }
 
 function ansible:deploy {

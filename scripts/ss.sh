@@ -7,6 +7,7 @@ fi
 
 ## Deployment Variables
 # <UDF name="token_password" label="Your Linode API token" />
+# <UDF name="user_name" label="The limited sudo user to be created in the cluster" />
 # <UDF name="cluster_size" label="slurm cluster size" default="2" oneof="2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18" />
 
 # git repo
