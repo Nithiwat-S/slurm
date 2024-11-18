@@ -4,6 +4,8 @@
   template:
     src: templates/motd.j2
     dest: /etc/motd
+  run_once: true
+  delegate_to: localhost
 
 - name: writing slurm creds into file
   copy:
@@ -14,3 +16,5 @@
     content: |
       sudo username: {{ username }}
       sudo password: {{ password }}
+  run_once: true
+  delegate_to: localhost
