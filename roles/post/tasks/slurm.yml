@@ -1,0 +1,23 @@
+- name: get NodeName
+  set_fact:
+    NodeName1: "{{ slurmd -C | grep NodeName }}"
+  run_once: true
+  delegate_to: "localhost"
+
+- name: Print debug1-555555555555555555555
+  debug:
+    msg: "{{ NodeName1: }}"
+
+- name: restart slurmctld
+  systemd:
+    name: slurmctld
+    state: restarted
+    enabled: yes
+  run_once: true
+  delegate_to: "localhost"
+
+- name: restart slurmd
+  systemd:
+    name: slurmd
+    state: restarted
+    enabled: yes

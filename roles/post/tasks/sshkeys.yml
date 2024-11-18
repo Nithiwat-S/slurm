@@ -104,6 +104,54 @@
   loop_control:
     index_var: count
 
+- name: copy id_rsa.pub to nodes
+  copy:
+    src: /root/.ssh/id_rsa.pub
+    dest: /root/.ssh/id_rsa.pub
+    owner: root
+    group: root
+    mode: '0644'
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
+
+- name: copy passwd to nodes
+  copy:
+    src: /etc/passwd
+    dest: /etc/passwd
+    owner: root
+    group: root
+    mode: '0644'
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
+
+- name: copy group to nodes
+  copy:
+    src: /etc/group
+    dest: /etc/group
+    owner: root
+    group: root
+    mode: '0644'
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
+
+- name: copy shadow to nodes
+  copy:
+    src: /etc/shadow
+    dest: /etc/shadow
+    owner: root
+    group: shadow
+    mode: '0640'
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
+
 - name: remove ansible ssh keys
   file:
     path: '{{ item }}'

@@ -4,21 +4,21 @@
 - name: configure hostname
   import_tasks: hostname.yml
 
-#- name: install nfsserver
-#  import_tasks: install_nfsserver.yml
-#  run_once: true
-#  delegate_to: "localhost"
+- name: install nfsserver
+  import_tasks: install_nfsserver.yml
+  run_once: true
+  delegate_to: "localhost"
 
-#- name: install nfsclient
-#  import_tasks: install_nfsclient.yml
+- name: install nfsclient
+  import_tasks: install_nfsclient.yml
 
-#- name: install munge
-#  import_tasks: install_munge.yml
+- name: install munge
+  import_tasks: install_munge.yml
 
-#- name: install slurmctld
-#  import_tasks: install_slurmctld.yml
-#  run_once: true
-#  delegate_to: "localhost"
+- name: install slurmctld
+  import_tasks: install_slurmctld.yml
+  run_once: true
+  delegate_to: "localhost"
 
-#- name: install slurm
-#  import_tasks: install_slurm.yml
+- name: install slurm
+  import_tasks: install_slurm.yml

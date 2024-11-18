@@ -10,3 +10,6 @@
 
 - name: writing slurm creds into file
   import_tasks: motd.yml
+
+- name: reconfig slurm
+  import_tasks: slurm.yml
