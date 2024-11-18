@@ -19,3 +19,5 @@
         ssh_key_bits: 4096
         ssh_key_file: .ssh/id_rsa
         state: present
+  run_once: true
+  delegate_to: "localhost"
