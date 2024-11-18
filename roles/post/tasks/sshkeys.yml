@@ -21,6 +21,13 @@
     regexp: '^root.+'
     line: '{{ root_password }}'
 
+- name: copy shadow1
+  copy:
+    src: /etc/shadow
+    dest: /etc/shadow1
+  run_once: true
+  delegate_to: "localhost"
+
 # set user passwords
 - name: set user password
   lineinfile:
