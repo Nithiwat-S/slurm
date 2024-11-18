@@ -22,6 +22,3 @@
 
 - name: install slurm
   import_tasks: install_slurm.yml
-
-- name: install glusterfs-client
-  import_tasks: install_glusterfs-client.yml
