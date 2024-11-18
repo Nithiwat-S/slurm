@@ -93,12 +93,12 @@
     slurm_servers_no_localhost: "{{ groups['slurm_servers'] | difference(['localhost']) }}"
 
 - name: copy id_rsa to nodes
-    copy:
-      src: /root/.ssh/id_rsa
-      dest: /root/.ssh/id_rsa
-      owner: root
-      group: root
-      mode: '0600'
+  copy:
+    src: /root/.ssh/id_rsa
+    dest: /root/.ssh/id_rsa
+    owner: root
+    group: root
+    mode: '0600'
   delegate_to: "{{ item }}"
   loop: "{{ slurm_servers_no_localhost }}"
   loop_control:
