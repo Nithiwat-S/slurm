@@ -15,7 +15,7 @@
 #size=$(ssh root@$ip_slurm 'grep -c "compute" /etc/hosts')
 - name: get NodeName
   set_fact:
-    node_range: "{{ printf "compute-[01-%02d]" $size }}"
+    node_range: "compute-[01-{{ '%02d' | format(size) }}]"
   run_once: true
   delegate_to: "localhost"
 
