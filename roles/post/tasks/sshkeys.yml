@@ -80,6 +80,16 @@
   run_once: true
   delegate_to: localhost
 
+- name: Copy user authorized_keys
+  copy:
+    src: /root/.ssh/authorized_keys
+    dest: "{{ item.userdir }}/.ssh/config"
+    mode: '0600'
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+  run_once: true
+  delegate_to: localhost
+
 - name: Copy root ssh config
   template:
     src: templates/ssh.config.j2
