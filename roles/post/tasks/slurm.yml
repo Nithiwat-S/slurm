@@ -25,7 +25,19 @@
 #echo "=$node_range="
 
 #new_NodeName=$(echo "$NodeName" | sed "s/compute-01/$node_range/")
+- name: Replace compute-01 with node_range
+  set_fact:
+    updated_NodeName: "{{ NodeName1.replace('compute-01', node_range) }}"
+  run_once: true
+  delegate_to: "localhost"
 
+- name: new slurm config
+  lineinfile:
+    path: /etc/slurm/slurm.conf
+    regexp: '^NodeName=.+'
+    line: '{{ updated_NodeName }}'
+  run_once: true
+  delegate_to: "localhost"
 
 - name: restart slurmctld
   systemd:
