@@ -88,6 +88,14 @@
     owner: "root"
     group: "root"
 
+- name: Copy user ssh config
+  template:
+    src: templates/ssh.config.j2
+    dest: "{{ item.userdir }}/.ssh/config"
+    mode: '0644'
+    owner: "{{ item.user }}"
+    group: "{{ item.user }}"
+
 - name: Copy slurm_servers group to a new variable without localhost
   set_fact:
     slurm_servers_no_localhost: "{{ groups['slurm_servers'] | difference(['localhost']) }}"
