@@ -1,6 +1,13 @@
-- name: get NodeName
+- name: Run slurmd command and grep for NodeName
+  shell: slurmd -C | grep NodeName
+  register: slurmd_output
+  run_once: true
+  delegate_to: "localhost"
+
+- name: Extract NodeName value
   set_fact:
-    NodeName1: "{{ slurmd -C | grep NodeName }}"
+    NodeName1: "{{ slurmd_output.stdout_lines[0].split('=')[1] }}"
+  when: slurmd_output.stdout_lines | length > 0
   run_once: true
   delegate_to: "localhost"
 
