@@ -4,9 +4,28 @@
   run_once: true
   delegate_to: "localhost"
 
-- name: Print debug1-555555555555555555555
+- name: Print debug1-NodeName1
   debug:
-    msg: "{{ NodeName1: }}"
+    msg: "=={{ NodeName1: }}=="
+
+- name: Print debug1-cluster_size
+  debug:
+    msg: "=={{ cluster_size: }}=="
+
+#size=$(ssh root@$ip_slurm 'grep -c "compute" /etc/hosts')
+- name: get NodeName
+  set_fact:
+    node_range: "{{ printf "compute-[01-%02d]" $size }}"
+  run_once: true
+  delegate_to: "localhost"
+
+- name: Print debug1-node_range
+  debug:
+    msg: "=={{ node_range: }}=="
+#echo "=$node_range="
+
+#new_NodeName=$(echo "$NodeName" | sed "s/compute-01/$node_range/")
+
 
 - name: restart slurmctld
   systemd:
