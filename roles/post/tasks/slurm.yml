@@ -10,7 +10,8 @@
 
 - name: Extract NodeName value
   set_fact:
-    NodeName1: "{{ slurmd_output.stdout_lines[0].split('=')[1] }}"
+    #NodeName1: "{{ slurmd_output.stdout_lines[0].split('=')[1] }}"
+    NodeName1: "{{ slurmd_output.stdout_lines[0] }}"
   when: slurmd_output.stdout_lines | length > 0
   run_once: true
   delegate_to: "localhost"
