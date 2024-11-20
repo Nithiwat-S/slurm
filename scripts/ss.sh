@@ -103,3 +103,10 @@ function setup {
 setup
 run ansible:build
 run ansible:deploy && export SUCCESS="true"
+
+#####################
+###     How to use. 
+# ssh {username}@x.x.x.x
+# sinfo
+# srun -N 2 hostname
+#####################
