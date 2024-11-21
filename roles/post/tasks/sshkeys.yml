@@ -93,8 +93,8 @@
 - name: Append user public key to authorized_keys
   lineinfile:
 #    path: "{{ ansible_env.HOME }}/.ssh/authorized_keys"
-    path:  "{{ item.userdir }}/.ssh/authorized_keys"
-    line: "{{ lookup('file', '{{ item.userdir }}/.ssh/id_rsa.pub') }}"
+    path:  "/home/{{ username }}/.ssh/authorized_keys"
+    line: "{{ lookup('file', '/home/{{ username }}/.ssh/id_rsa.pub') }}"
     state: present
   run_once: true
   delegate_to: localhost
