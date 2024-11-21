@@ -80,13 +80,22 @@
   run_once: true
   delegate_to: localhost
 
-- name: Copy user authorized_keys
-  copy:
-    src: /root/.ssh/authorized_keys
-    dest: "{{ item.userdir }}/.ssh/config"
-    mode: '0600'
-    owner: "{{ item.user }}"
-    group: "{{ item.user }}"
+#- name: Copy user authorized_keys
+#  copy:
+#    src: /root/.ssh/authorized_keys
+#    dest: "{{ item.userdir }}/.ssh/config"
+#    mode: '0600'
+#    owner: "{{ item.user }}"
+#    group: "{{ item.user }}"
+#  run_once: true
+#  delegate_to: localhost
+
+- name: Append user public key to authorized_keys
+  lineinfile:
+#    path: "{{ ansible_env.HOME }}/.ssh/authorized_keys"
+    path:  "{{ item.userdir }}/.ssh/authorized_keys"
+    line: "{{ lookup('file', '{{ item.userdir }}/.ssh/id_rsa.pub') }}"
+    state: present
   run_once: true
   delegate_to: localhost
 
