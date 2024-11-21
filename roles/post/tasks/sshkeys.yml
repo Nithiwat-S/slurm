@@ -106,6 +106,8 @@
     mode: '0644'
     owner: "root"
     group: "root"
+  run_once: true
+  delegate_to: localhost
 
 - name: Copy user ssh config
   template:
@@ -114,6 +116,8 @@
     mode: '0644'
     owner: "{{ username }}"
     group: "{{ username }}"
+  run_once: true
+  delegate_to: localhost
 
 - name: Copy slurm_servers group to a new variable without localhost
   set_fact:
