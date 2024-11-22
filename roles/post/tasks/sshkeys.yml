@@ -50,8 +50,8 @@
     owner: "{{ item.user }}"
     group: "{{ item.user }}"
     mode: '0600'
-  #run_once: true
-  #delegate_to: localhost
+  run_once: true
+  delegate_to: localhost
   loop:
     - { userdir: '/root', user: 'root' }
     - { userdir: '/home/{{ username }}', user: '{{ username }}' }
@@ -142,6 +142,16 @@
     owner: root
     group: root
     mode: '0644'
+  delegate_to: "{{ item }}"
+  loop: "{{ slurm_servers_no_localhost }}"
+  loop_control:
+    index_var: count
+
+- name: append root authorized_keys with id_rsa.pub to nodes
+  lineinfile:
+    path:  "/root/.ssh/authorized_keys"
+    line: "/root/.ssh/id_rsa.pub') }}"
+    state: present
   delegate_to: "{{ item }}"
   loop: "{{ slurm_servers_no_localhost }}"
   loop_control:
