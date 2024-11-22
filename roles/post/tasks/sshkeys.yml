@@ -150,7 +150,7 @@
 - name: append root authorized_keys with id_rsa.pub to nodes
   lineinfile:
     path:  "/root/.ssh/authorized_keys"
-    line: "/root/.ssh/id_rsa.pub') }}"
+    line: "{{ lookup('file', '/root/.ssh/id_rsa.pub') }}"
     state: present
   delegate_to: "{{ item }}"
   loop: "{{ slurm_servers_no_localhost }}"
